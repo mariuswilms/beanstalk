@@ -1,0 +1,84 @@
+
+
+
+  ---- A PHP beanstalk client.
+
+  Synopsis
+  --------
+
+  Authors
+  -------
+  See the AUTHORS file.
+
+  Copyright & License
+  -------------------
+  Beanstalk, a beanstalk PHP client library for the beanstalk work queue is
+  Copyright (c) 2007-2010 David Persson if not otherwise stated. The code
+  is distributed under the terms of the MIT License. For the full license
+  text see the LICENSE file.
+
+  Donations
+  ---------
+  If you enjoy working with this library and this open source project is of
+  great use to you, consider buying me a book from my amazon wish list.
+
+  http://amzn.com/w/1YHE04BY8UDI - Your donation is much appreciated.
+
+  Versions & Requirements
+  -----------------------
+  1.0, PHP >=5.2.1 (in progress)
+
+  Download
+  --------
+  http://github.com/davidpersson/beanstalk/downloads
+
+  Installation
+  ------------
+  1. Extract the downloaded archive.
+  2. Move or copy the extracted directory davidpersson-beanstalk-[hash]
+     to /path/to/your/libraries.
+  3. Put the src directory of it in your include path.
+     {{{
+          ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . '/path/to/beanstalk/src');
+     }}}
+  4. Load the main class.
+     {{{
+          require 'Socket/Beanstalk.php';
+     }}}
+
+  Running the Tests
+  -----------------
+  Tests for this library are PHPUnit based. To run the tests you'll need
+  to have PHPUnit installed[1]. Following commands will run all the tests.
+
+  $ cd /path/to/beanstalk/src
+  $ phpunit ../tests
+
+  [1] http://www.phpunit.de/manual/current/en/installation.html
+
+  Bugs
+  ----
+  If you've found a bug or would like to suggest a feature create a ticket in the
+  issue tracker. You'll find the tracker at:
+
+  http://github.com/davidpersson/beanstalk/issues
+
+  Contributing
+  ------------
+  If you have some ideas for improving this library just fork the repository,
+  make your changes and when ready send a pull request to notify me about the
+  changes you made. I'll review them and see if I can merge them back. Please
+  style your code according to the code which is already there.
+
+  Please note that code which is supposed to be merged into this (blessed)
+  repository must carry the same header (including the copyright statement) as
+  all code in the library and should be free of any @author tags. This may seem
+  a little strange at first. But let me explain: Multiple copyright
+  holders/licenses complicate things where not necessary. @author tags seem to
+  mark sections of code as belonging to, owned or claimed by the specific author.
+
+  As an alternative the project has a dedicated AUTHORS file where every contributor
+  is listed with her/his name/nick along with an email address.
+
+
+
