@@ -315,7 +315,7 @@ class Socket_Beanstalk {
 		$status = $this->_read();
 
 		switch ($status) {
-			case 'TOUCJED':
+			case 'TOUCHED':
 				return true;
 			case 'NOT_TOUCHED':
 			default:
