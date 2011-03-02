@@ -1,6 +1,6 @@
 <?php
 /**
- * beanstalk: A PHP minmalistic beanstalk client.
+ * beanstalk: A minmalistic PHP beanstalk client.
  *
  * Copyright (c) 2009-2011 David Persson
  *
