@@ -1,6 +1,6 @@
 
   BEANSTALK
-  ---- A PHP beanstalk client.
+  ---- A PHP minmalistic beanstalk client.
 
   Synopsis
   --------

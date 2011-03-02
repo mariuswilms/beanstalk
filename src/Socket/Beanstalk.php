@@ -1,8 +1,6 @@
 <?php
 /**
- * Beanstalk Socket
- *
- * A low-level interface to the beanstalkd queue service.
+ * beanstalk: A PHP minmalistic beanstalk client.
  *
  * Copyright (c) 2009-2011 David Persson
  *
@@ -14,7 +12,8 @@
  */
 
 /**
- * Implements the beanstalk protocol spec 1.2.
+ * An interface to the beanstalk queue service. Implements the beanstalk
+ * protocol spec 1.2.
  *
  * @link https://github.com/kr/beanstalkd/blob/master/doc/protocol.txt
  */
