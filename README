@@ -4,13 +4,15 @@
 
   Synopsis
   --------
-  This is a generic PHP library for interfacing with the beanstalk
-  (http://kr.github.com/beanstalkd/) work queue. The contained client class
-  is designed to be the most minimal implementation of the beanstalk protocol.
+  This library allows you to interface with the beanstalk[1] work queue and is
+  built with a minimal featureset still supporting the complete protocol. The
+  main (and currently only) class can be found at `src/Socket/Beanstalk.php`.
 
-  This library formerly was part of the queue plugin for CakePHP
-  (https://github.com/davidpersson/queue) and has been extracted from there for
-  higher reusability in other places and frameworks.
+  The class was formerly part of the queue plugin for CakePHP[2]. It has been
+  extracted for higher reusability in other places and frameworks.
+
+  [1] https://kr.github.com/beanstalkd
+  [2] https://github.com/davidpersson/queue
 
   Authors
   -------
