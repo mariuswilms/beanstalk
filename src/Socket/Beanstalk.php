@@ -513,7 +513,8 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary
 	 */
 	public function statsJob($id) {
-		return $this->_statsRead("stats-job {$id}");
+		$this->_write(sprintf('stats-job %d', $id));
+		return $this->_statsRead();
 	}
 
 	/**
@@ -523,7 +524,8 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
 	 */
 	public function statsTube($tube) {
-		return $this->_statsRead("stats-tube {$tube}");
+		$this->_write(sprintf('stats-tube %s', $tube));
+		return $this->_statsRead();
 	}
 
 	/**
@@ -532,7 +534,8 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
 	 */
 	public function stats() {
-		return $this->_statsRead('stats');
+		$this->_write('stats');
+		return $this->_statsRead();
 	}
 
 	/**
@@ -541,7 +544,8 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
 	 */
 	public function listTubes() {
-		return $this->_statsRead('list-tubes');
+		$this->_write('list-tubes');
+		return $this->_statsRead();
 	}
 
 	/**
@@ -550,7 +554,8 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
 	 */
 	public function listTubeUsed() {
-		return $this->_statsRead('list-tube-used', false);
+		$this->_write('list-tube-used');
+		return $this->_statsRead(false);
 	}
 
 	/**
@@ -569,18 +574,17 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
 	 */
 	public function listTubesWatched() {
-		return $this->_statsRead('list-tubes-watched');
+		$this->_write('list-tubes-watched');
+		return $this->_statsRead();
 	}
 
 	/**
 	 * Handles responses for all stat methods.
 	 *
-	 * @param string $command The command to send to the server.
 	 * @param boolean $decode Whether to decode data before returning it or not. Default is `true`.
 	 * @return array|string|boolean `false` on error otherwise statistical data.
 	 */
-	protected function _statsRead($command, $decode = true) {
-		$this->_write($command);
+	protected function _statsRead($decode = true) {
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
