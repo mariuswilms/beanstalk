@@ -64,6 +64,7 @@ class Socket_Beanstalk {
 	 *                          to `11300`.
 	 *        - `'timeout'`     Timeout in seconds when establishing the
 	 *                          connection, defaults to `1`.
+	 * @return void
 	 */
 	public function __construct(array $config = array()) {
 		$defaults = array(
