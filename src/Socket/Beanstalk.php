@@ -511,7 +511,9 @@ class Socket_Beanstalk {
 	 * @param integer $id The job id
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary
 	 */
-	public function statsJob($id) {}
+	public function statsJob($id) {
+		return $this->_statsRead("stats-job {$id}");
+	}
 
 	/**
 	 * Gives statistical information about the specified tube if it exists.
@@ -519,7 +521,9 @@ class Socket_Beanstalk {
 	 * @param string $tube Name of the tube.
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
 	 */
-	public function statsTube($tube) {}
+	public function statsTube($tube) {
+		return $this->_statsRead("stats-tube {$tube}");
+	}
 
 	/**
 	 * Gives statistical information about the system as a whole.
@@ -527,16 +531,7 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
 	 */
 	public function stats() {
-		$this->_write('stats');
-		$status = strtok($this->_read(), ' ');
-
-		switch ($status) {
-			case 'OK':
-				return $this->_read((integer)strtok(' '));
-			default:
-				$this->_errors[] = $status;
-				return false;
-		}
+		return $this->_statsRead('stats');
 	}
 
 	/**
@@ -544,14 +539,18 @@ class Socket_Beanstalk {
 	 *
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
 	 */
-	public function listTubes() {}
+	public function listTubes() {
+		return $this->_statsRead('list-tubes');
+	}
 
 	/**
 	 * Returns the tube currently being used by the producer.
 	 *
 	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
 	 */
-	public function listTubeUsed() {}
+	public function listTubeUsed() {
+		return $this->_statsRead('list-tube-used');
+	}
 
 	/**
 	 * Alias for listTubeUsed.
@@ -568,7 +567,27 @@ class Socket_Beanstalk {
 	 *
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
 	 */
-	public function listTubesWatched() {}
+	public function listTubesWatched() {
+		return $this->_statsRead('list-tubes-watched');
+	}
+
+	/**
+	 * Handles responses for all stat methods.
+	 *
+	 * @return string|boolean `false` on error otherwise statistical data.
+	 */
+	protected function _statsRead($command) {
+		$this->_write($command);
+		$status = strtok($this->_read(), ' ');
+
+		switch ($status) {
+			case 'OK':
+				return $this->_read((integer)strtok(' '));
+			default:
+				$this->_errors[] = $status;
+				return false;
+		}
+	}
 }
 
 ?>
