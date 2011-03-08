@@ -549,7 +549,7 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
 	 */
 	public function listTubeUsed() {
-		return $this->_statsRead('list-tube-used');
+		return $this->_statsRead('list-tube-used', false);
 	}
 
 	/**
@@ -574,19 +574,48 @@ class Socket_Beanstalk {
 	/**
 	 * Handles responses for all stat methods.
 	 *
-	 * @return string|boolean `false` on error otherwise statistical data.
+	 * @param string $command The command to send to the server.
+	 * @param boolean $decode Whether to decode data before returning it or not. Default is `true`.
+	 * @return array|string|boolean `false` on error otherwise statistical data.
 	 */
-	protected function _statsRead($command) {
+	protected function _statsRead($command, $decode = true) {
 		$this->_write($command);
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
 			case 'OK':
-				return $this->_read((integer)strtok(' '));
+				$data = $this->_read((integer)strtok(' '));
+				return $decode ? $this->_decode($data) : $data;
 			default:
 				$this->_errors[] = $status;
 				return false;
 		}
+	}
+
+	/**
+	 * Decodes YAML data. This is a super naive decoder which just works on a
+	 * subset of YAML which is commonly returned by beanstalk.
+	 *
+	 * @param string $data The data in YAML format, can be either a list or a dictionary.
+	 * @return array An (associative) array of the converted data.
+	 */
+	protected function _decode($data) {
+		$data = array_slice(explode("\n", $data), 1);
+		$result = array();
+
+		foreach ($data as $key => $value) {
+			if ($value[0] === '-') {
+				$value = ltrim($value, '- ');
+			} elseif (strpos($value, ':') !== false) {
+				list($key, $value) = explode(':', $value);
+				$value = ltrim($value, ' ');
+			}
+			if (is_numeric($value)) {
+				$value = (integer) $value == $value ? (integer) $value : (float) $value;
+			}
+			$result[$key] = $value;
+		}
+		return $result;
 	}
 }
 
