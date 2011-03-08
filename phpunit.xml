@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+		 backupStaticAttributes="false"
+		 syntaxCheck="false">
+	<testsuites>
+		<testsuite name="PHP">
+			<directory suffix="Test.php">tests/integration</directory>
+		</testsuite>
+	</testsuites>
+	<php>
+		<const name="TEST_EXECUTION" value="true" />
+		<const name="TEST_SERVER_HOST" value="127.0.0.1" />
+		<const name="TEST_SERVER_PORT" value="11301" />
+	</php>
+</phpunit>
