@@ -11,7 +11,7 @@
   The class was formerly part of the queue plugin for CakePHP[2]. It has been
   extracted for higher reusability in other places and frameworks.
 
-  [1] https://kr.github.com/beanstalkd
+  [1] http://kr.github.com/beanstalkd
   [2] https://github.com/davidpersson/queue
 
   Authors
