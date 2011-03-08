@@ -9,6 +9,7 @@
  *
  * @copyright  2009-2011 David Persson <nperson@gmx.de>
  * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link       http://github.com/davidpersson/beanstalk
  */
 
 /**
