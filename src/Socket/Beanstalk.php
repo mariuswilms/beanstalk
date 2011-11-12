@@ -555,7 +555,7 @@ class Socket_Beanstalk {
 	 */
 	public function listTubeUsed() {
 		$this->_write('list-tube-used');
-		return $this->_statsRead(false);
+		return strtok($this->_read(), 'USING ');
 	}
 
 	/**
