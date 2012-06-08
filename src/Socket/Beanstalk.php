@@ -226,8 +226,7 @@ class Socket_Beanstalk {
 	 *         the job id.
 	 */
 	public function put($pri, $delay, $ttr, $data) {
-		$this->_write(sprintf('put %d %d %d %d', $pri, $delay, $ttr, strlen($data)));
-		$this->_write($data);
+		$this->_write(sprintf("put %d %d %d %d\r\n%s", $pri, $delay, $ttr, strlen($data), $data));
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
