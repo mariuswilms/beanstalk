@@ -44,9 +44,12 @@ class Socket_Beanstalk {
 	protected $_connection;
 
 	/**
-	 * Generated errors.
+	 * Generated errors. Will hold a maximum of 200 error messages at any time
+	 * to prevent pilling up messages and using more and more memory. This is
+	 * especially important if this class is used in long-running workers.
 	 *
 	 * @see Socket_Beanstalk::errors()
+	 * @see Socket_Beanstalk::_error()
 	 * @var array
 	 */
 	protected $_errors = array();
@@ -109,7 +112,7 @@ class Socket_Beanstalk {
 		$this->_connection = @call_user_func_array($function, $params);
 
 		if (!empty($errNum) || !empty($errStr)) {
-			$this->_errors[] = "{$errNum}: {$errStr}";
+			$this->_error("{$errNum}: {$errStr}");
 		}
 
 		$this->connected = is_resource($this->_connection);
@@ -148,6 +151,20 @@ class Socket_Beanstalk {
 	}
 
 	/**
+	 * Pushes an error message to `Beanstalk::$_errors`. Ensures
+	 * that at any point there are not more than 200 messages.
+	 *
+	 * @param string $message The error message.
+	 * @return void
+	 */
+	protected function _error($message) {
+		if (count($this->_errors) >= 200) {
+			array_shift($this->_errors);
+		}
+		array_push($this->_errors, $message);
+	}
+
+	/**
 	 * Writes a packet to the socket. Prior to writing to the socket will check
 	 * for availability of the connection.
 	 *
@@ -182,7 +199,7 @@ class Socket_Beanstalk {
 			$meta = stream_get_meta_data($this->_connection);
 
 			if ($meta['timed_out']) {
-				$this->_errors[] = 'Connection timed out.';
+				$this->_error('Connection timed out.');
 				return false;
 			}
 			$packet = rtrim($data, "\r\n");
@@ -220,7 +237,7 @@ class Socket_Beanstalk {
 			case 'EXPECTED_CRLF':
 			case 'JOB_TOO_BIG':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -245,7 +262,7 @@ class Socket_Beanstalk {
 			case 'USING':
 				return strtok(' ');
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -288,7 +305,7 @@ class Socket_Beanstalk {
 			case 'DEADLINE_SOON':
 			case 'TIMED_OUT':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -308,7 +325,7 @@ class Socket_Beanstalk {
 				return true;
 			case 'NOT_FOUND':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -331,7 +348,7 @@ class Socket_Beanstalk {
 				return true;
 			case 'NOT_FOUND':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -353,7 +370,7 @@ class Socket_Beanstalk {
 				return true;
 			case 'NOT_FOUND':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -373,7 +390,7 @@ class Socket_Beanstalk {
 				return true;
 			case 'NOT_TOUCHED':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -393,7 +410,7 @@ class Socket_Beanstalk {
 			case 'WATCHING':
 				return (integer)strtok(' ');
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -413,7 +430,7 @@ class Socket_Beanstalk {
 				return (integer)strtok(' ');
 			case 'NOT_IGNORED':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -477,7 +494,7 @@ class Socket_Beanstalk {
 				);
 			case 'NOT_FOUND':
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -499,7 +516,7 @@ class Socket_Beanstalk {
 			case 'KICKED':
 				return (integer)strtok(' ');
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
@@ -592,7 +609,7 @@ class Socket_Beanstalk {
 				$data = $this->_read((integer)strtok(' '));
 				return $decode ? $this->_decode($data) : $data;
 			default:
-				$this->_errors[] = $status;
+				$this->_error($status);
 				return false;
 		}
 	}
