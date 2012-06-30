@@ -572,7 +572,15 @@ class Socket_Beanstalk {
 	 */
 	public function listTubeUsed() {
 		$this->_write('list-tube-used');
-		return strtok($this->_read(), 'USING ');
+		$status = strtok($this->_read(), ' ');
+
+		switch ($status) {
+			case 'USING':
+				return strtok(' ');
+			default:
+				$this->_error($status);
+				return false;
+		}
 	}
 
 	/**
