@@ -1,53 +1,53 @@
 
-  BEANSTALK
-  ---- A minimalistic PHP beanstalk client.
+BEANSTALK
+---- A minimalistic PHP beanstalk client.
 
-  Synopsis
-  --------
-  This library allows you to interface with the beanstalk[1] work queue and is
-  built with a minimal featureset still supporting the complete protocol. The
-  main (and currently only) class can be found at `src/Socket/Beanstalk.php`.
+Synopsis
+--------
+This library allows you to interface with the beanstalk[1] work queue and is
+built with a minimal featureset still supporting the complete protocol. The
+main (and currently only) class can be found at `src/Socket/Beanstalk.php`.
 
-  The class was formerly part of the queue plugin for CakePHP[2]. It has been
-  extracted for higher reusability in other places and frameworks.
+The class was formerly part of the queue plugin for CakePHP[2]. It has been
+extracted for higher reusability in other places and frameworks.
 
-  [1] http://kr.github.com/beanstalkd
-  [2] https://github.com/davidpersson/queue
+[1] http://kr.github.com/beanstalkd
+[2] https://github.com/davidpersson/queue
 
-  Copyright & License
-  -------------------
-  Beanstalk, a beanstalk PHP client library for the beanstalk work queue is
-  Copyright (c) 2009-2012 David Persson if not otherwise stated. The code
-  is distributed under the terms of the MIT License. For the full license
-  text see the LICENSE file.
+Copyright & License
+-------------------
+Beanstalk, a beanstalk PHP client library for the beanstalk work queue is
+Copyright (c) 2009-2012 David Persson if not otherwise stated. The code
+is distributed under the terms of the MIT License. For the full license
+text see the LICENSE file.
 
-  Versions & Requirements
-  -----------------------
-  1.0.0, PHP >=5.2.1
-  1.1.0, PHP >=5.2.1 (in progress)
+Versions & Requirements
+-----------------------
+1.0.0, PHP >=5.2.1
+1.1.0, PHP >=5.2.1 (in progress)
 
-  Installation
-  ------------
-  1. Clone the repository or extract a downloaded archive.
+Installation
+------------
+1. Clone the repository or extract a downloaded archive.
 
-  2. Move or copy the resulting directory to into your project.
+2. Move or copy the resulting directory to into your project.
 
-  3. Put the `src` directory of the library in your include path.
-     ```
-          ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . '/path/to/beanstalk/src');
-     ```
+3. Put the `src` directory of the library in your include path.
+   ```
+        ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . '/path/to/beanstalk/src');
+   ```
 
-  4. Load the main class.
-     ```
-          require 'Socket/Beanstalk.php';
-     ```
+4. Load the main class.
+   ```
+        require 'Socket/Beanstalk.php';
+   ```
 
-  Running the Tests
-  -----------------
-  Tests for this library are PHPUnit based. To run the tests you'll need
-  to have PHPUnit installed[1]. Following commands will run all the tests.
+Running the Tests
+-----------------
+Tests for this library are PHPUnit based. To run the tests you'll need
+to have PHPUnit installed[1]. Following commands will run all the tests.
 
-  $ cd /path/to/beanstalk/src
-  $ phpunit ../tests
+$ cd /path/to/beanstalk/src
+$ phpunit ../tests
 
-  [1] http://www.phpunit.de/manual/current/en/installation.html
+[1] http://www.phpunit.de/manual/current/en/installation.html
