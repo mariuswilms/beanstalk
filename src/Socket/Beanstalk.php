@@ -204,7 +204,7 @@ class Socket_Beanstalk {
 			}
 			$packet = rtrim($data, "\r\n");
 		} else {
-			$packet = stream_get_line($this->_connection, 16384, "\r\n");
+			$packet = trim(fgets($this->_connection, 16384));
 		}
 		return $packet;
 	}
