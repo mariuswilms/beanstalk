@@ -28,23 +28,69 @@ Versions & Requirements
 
 Note: In PHP Versions 5.3.9 and 5.3.10 the `stream_get_line()`
       function exhibits buggy behavior (PHP bug #60817), thus
-      these version cannot be used with this library.
+      these versions cannot be used with this library.
 
 Installation
 ------------
-1. Clone the repository or extract a downloaded archive.
+Clone the repository or extract a downloaded archive, then move
+or copy the resulting directory into /path/to/your/libraries/.
 
-2. Move or copy the resulting directory to into your project.
+To enable loading of the classes contained in the library, put
+the `src` directory of the library in your include path.
+<?php
+// ...
 
-3. Put the `src` directory of the library in your include path.
-   ```
-        ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . '/path/to/beanstalk/src');
-   ```
+ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . '/path/to/beanstalk/src');
 
-4. Load the main class.
-   ```
-        require 'Socket/Beanstalk.php';
-   ```
+// ...
+?>
+
+Usage
+-----
+<?php
+
+require_once 'Socket/Beanstalk.php';
+
+//
+// A sample producer.
+//
+$beanstalk = new Socket_Beanstalk(); // For connection options see the class documentation.
+
+$beanstalk->connect();
+$beanstalk->choose('flux'); // Begin to use tube `'flux'`.
+$beanstalk->put(
+    23, // Give the job a priority of 23.
+    0,  // Do not wait to put job into the ready queue.
+    60, // Give the job 1 minute to run.
+    '/path/to/cat-image.png' // The job's body.
+);
+$beanstalk->disconnect();
+
+//
+// A sample consumer.
+//
+$beanstalk = new Socket_Beanstalk();
+
+$beanstalk->connect();
+$beanstalk->choose('flux');
+
+while (true) {
+    $job = $beanstalk->reserve(); // Block until job is available.
+    // Now $job is an array which contains its ID and body:
+    // array('id' => 123, 'body' => '/path/to/cat-image.png')
+
+    // Processing of the job...
+    $result = touch($job['body']);
+
+    if ($result) {
+        $beanstalk->delete($job['id']);
+    } else {
+        $beanstalk->bury($job['id']);
+    }
+}
+$beanstalk->disconnect();
+
+?>
 
 Running the Tests
 -----------------
