@@ -26,6 +26,10 @@ Versions & Requirements
 1.0.0, PHP >=5.2.1
 1.1.0, PHP >=5.2.1 (in progress)
 
+Note: In PHP Versions 5.3.9 and 5.3.10 the `stream_get_line()`
+      function exhibits buggy behavior (PHP bug #60817), thus
+      these version cannot be used with this library.
+
 Installation
 ------------
 1. Clone the repository or extract a downloaded archive.
