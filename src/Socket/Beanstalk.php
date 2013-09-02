@@ -226,8 +226,13 @@ class Socket_Beanstalk {
 	 *         the job id.
 	 */
 	public function put($pri, $delay, $ttr, $data) {
-		$this->_write(sprintf('put %d %d %d %d', $pri, $delay, $ttr, strlen($data)));
-		$this->_write($data);
+		$command = sprintf("put %d %d %d %d\r\n%s",
+		 $pri, $delay, $ttr, strlen($data), $data);
+
+		if (!$this->_write($command)) {
+			return false;
+		}
+
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
@@ -255,7 +260,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise the name of the tube.
 	 */
 	public function choose($tube) {
-		$this->_write(sprintf('use %s', $tube));
+		if (!$this->_write(sprintf('use %s', $tube))) {
+			return false;
+		}
+
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
@@ -290,9 +298,12 @@ class Socket_Beanstalk {
 	 */
 	public function reserve($timeout = null) {
 		if (isset($timeout)) {
-			$this->_write(sprintf('reserve-with-timeout %d', $timeout));
+			$result = $this->_write(sprintf('reserve-with-timeout %d', $timeout));
 		} else {
-			$this->_write('reserve');
+			$result = $this->_write('reserve');
+		}
+		if (!$result) {
+			return false;
 		}
 		$status = strtok($this->_read(), ' ');
 
@@ -317,7 +328,10 @@ class Socket_Beanstalk {
 	 * @return boolean `false` on error, `true` on success.
 	 */
 	public function delete($id) {
-		$this->_write(sprintf('delete %d', $id));
+		if (!$this->_write(sprintf('delete %d', $id))) {
+			return false;
+		}
+
 		$status = $this->_read();
 
 		switch ($status) {
@@ -339,7 +353,10 @@ class Socket_Beanstalk {
 	 * @return boolean `false` on error, `true` on success.
 	 */
 	public function release($id, $pri, $delay) {
-		$this->_write(sprintf('release %d %d %d', $id, $pri, $delay));
+		if (!$this->_write(sprintf('release %d %d %d', $id, $pri, $delay))) {
+			return false;
+		}
+
 		$status = $this->_read();
 
 		switch ($status) {
@@ -362,7 +379,10 @@ class Socket_Beanstalk {
 	 * @return boolean `false` on error, `true` on success.
 	 */
 	public function bury($id, $pri) {
-		$this->_write(sprintf('bury %d %d', $id, $pri));
+		if (!$this->_write(sprintf('bury %d %d', $id, $pri))) {
+			return false;
+		}
+
 		$status = $this->_read();
 
 		switch ($status) {
@@ -382,7 +402,10 @@ class Socket_Beanstalk {
 	 * @return boolean `false` on error, `true` on success.
 	 */
 	public function touch($id) {
-		$this->_write(sprintf('touch %d', $id));
+		if (!$this->_write(sprintf('touch %d', $id))) {
+			return false;
+		}
+
 		$status = $this->_read();
 
 		switch ($status) {
@@ -403,7 +426,10 @@ class Socket_Beanstalk {
 	 * @return integer|boolean `false` on error otherwise number of tubes in watch list.
 	 */
 	public function watch($tube) {
-		$this->_write(sprintf('watch %s', $tube));
+		if (!$this->_write(sprintf('watch %s', $tube))) {
+			return false;
+		}
+
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
@@ -422,7 +448,10 @@ class Socket_Beanstalk {
 	 * @return integer|boolean `false` on error otherwise number of tubes in watch list.
 	 */
 	public function ignore($tube) {
-		$this->_write(sprintf('ignore %s', $tube));
+		if (!$this->_write(sprintf('ignore %s', $tube))) {
+			return false;
+		}
+
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
@@ -444,7 +473,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise the body of the job.
 	 */
 	public function peek($id) {
-		$this->_write(sprintf('peek %d', $id));
+		if (!$this->_write(sprintf('peek %d', $id))) {
+			return false;
+		}
+
 		return $this->_peekRead();
 	}
 
@@ -454,7 +486,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise the body of the job.
 	 */
 	public function peekReady() {
-		$this->_write('peek-ready');
+		if (!$this->_write('peek-ready')) {
+			return false;
+		}
+
 		return $this->_peekRead();
 	}
 
@@ -464,7 +499,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise the body of the job.
 	 */
 	public function peekDelayed() {
-		$this->_write('peek-delayed');
+		if (!$this->_write('peek-delayed')) {
+			return false;
+		}
+
 		return $this->_peekRead();
 	}
 
@@ -474,7 +512,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise the body of the job.
 	 */
 	public function peekBuried() {
-		$this->_write('peek-buried');
+		if (!$this->_write('peek-buried')) {
+			return false;
+		}
+
 		return $this->_peekRead();
 	}
 
@@ -509,7 +550,10 @@ class Socket_Beanstalk {
 	 * @return integer|boolean False on error otherwise number of job kicked.
 	 */
 	public function kick($bound) {
-		$this->_write(sprintf('kick %d', $bound));
+		if (!$this->_write(sprintf('kick %d', $bound))) {
+			return false;
+		}
+
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
@@ -530,7 +574,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary
 	 */
 	public function statsJob($id) {
-		$this->_write(sprintf('stats-job %d', $id));
+		if (!$this->_write(sprintf('stats-job %d', $id))) {
+			return false;
+		}
+
 		return $this->_statsRead();
 	}
 
@@ -541,7 +588,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
 	 */
 	public function statsTube($tube) {
-		$this->_write(sprintf('stats-tube %s', $tube));
+		if (!$this->_write(sprintf('stats-tube %s', $tube))) {
+			return false;
+		}
+
 		return $this->_statsRead();
 	}
 
@@ -551,7 +601,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
 	 */
 	public function stats() {
-		$this->_write('stats');
+		if (!$this->_write('stats')) {
+			return false;
+		}
+
 		return $this->_statsRead();
 	}
 
@@ -561,7 +614,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
 	 */
 	public function listTubes() {
-		$this->_write('list-tubes');
+		if (!$this->_write('list-tubes')) {
+			return false;
+		}
+
 		return $this->_statsRead();
 	}
 
@@ -571,7 +627,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
 	 */
 	public function listTubeUsed() {
-		$this->_write('list-tube-used');
+		if (!$this->_write('list-tube-used')) {
+			return false;
+		}
+
 		$status = strtok($this->_read(), ' ');
 
 		switch ($status) {
@@ -599,7 +658,10 @@ class Socket_Beanstalk {
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
 	 */
 	public function listTubesWatched() {
-		$this->_write('list-tubes-watched');
+		if (!$this->_write('list-tubes-watched')) {
+			return false;
+		}
+
 		return $this->_statsRead();
 	}
 
