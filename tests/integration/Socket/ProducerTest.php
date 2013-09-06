@@ -100,6 +100,16 @@ class ProducerTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse($result);
 	}
+
+	public function testHighFrequencyPut() {
+		$this->subject->choose('test');
+
+		for ($i = 0; $i < 10000; $i++) {
+			$this->subject->put(0, 0, 100, 'test' . $i);
+		}
+		$result = $this->subject->statsTube('test');
+		$this->assertEquals(10000, $result['current-jobs-urgent']);
+	}
 }
 
 ?>
