@@ -97,7 +97,7 @@ Running the Tests
 The integration tests contained in this library require a running beanstalkd
 instance. You'll need to start a dedicated instance on port 11301 as follows.
 
-$ beanstalkd -V -l 127.0.0.1 -p 11301
+$ beanstalkd -VV -l 127.0.0.1 -p 11301
 
 Tests for this library are PHPUnit based. To run the tests you'll need
 to have PHPUnit installed[1]. Following commands will run all the tests.
