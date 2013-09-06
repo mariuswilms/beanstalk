@@ -76,13 +76,13 @@ class ProducerTest extends PHPUnit_Framework_TestCase {
 
 	public function testExceedFreadDefaultChunkSize() {
 		$this->subject->put(0, 0, 100, str_repeat('0', 8192 + 4));
-		$result = $this->subject->reserve(5);
+		$result = $this->subject->reserve(1);
 
 		$this->subject->delete($result['id']);
 		$this->assertEquals(8192 + 4, strlen($result['body']));
 
 		$this->subject->put(0, 0, 100, str_repeat('0', 8192 * 4));
-		$result = $this->subject->reserve(5);
+		$result = $this->subject->reserve(1);
 
 		$this->subject->delete($result['id']);
 		$this->assertEquals(8192 * 4, strlen($result['body']));
