@@ -41,9 +41,13 @@ class ProducerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPut() {
-		$result = $this->subject->put(0, 0, 100, 'test');
-		$result = $this->subject->put(0, 0, 100, 'test');
-		$this->assertGreaterThan(1, $result);
+		$this->subject->choose('test');
+
+		$this->subject->put(0, 0, 100, 'test');
+		$this->subject->put(0, 0, 100, 'test');
+
+		$result = $this->subject->statsTube('test');
+		$this->assertEquals(2, $result['current-jobs-urgent']);
 	}
 
 	public function testChoose() {
@@ -61,7 +65,7 @@ class ProducerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('test0', $result['body']);
 	}
 
-	public function testReserveWitTimeout() {
+	public function testReserveWithTimeout() {
 		$start = microtime(true);
 
 		$this->subject->reserve(1);
