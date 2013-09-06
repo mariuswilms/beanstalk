@@ -87,6 +87,19 @@ class ProducerTest extends PHPUnit_Framework_TestCase {
 		$this->subject->delete($result['id']);
 		$this->assertEquals(8192 * 4, strlen($result['body']));
 	}
+
+	public function testExceedMaxJobSize() {
+		$this->subject->put(0, 0, 100, str_repeat('0', 65536 - 1));
+		$result = $this->subject->reserve(5);
+
+		$this->subject->delete($result['id']);
+		$this->assertEquals(65536 - 1, strlen($result['body']));
+
+		$this->subject->put(0, 0, 100, str_repeat('0', 65536));
+		$result = $this->subject->reserve(1);
+
+		$this->assertFalse($result);
+	}
 }
 
 ?>
