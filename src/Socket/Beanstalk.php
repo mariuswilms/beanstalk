@@ -34,7 +34,7 @@ class Socket_Beanstalk {
 	 *
 	 * @var array
 	 */
-	protected $_config = array();
+	protected $_config = [];
 
 	/**
 	 * The current connection resource handle (if any).
@@ -52,7 +52,7 @@ class Socket_Beanstalk {
 	 * @see Socket_Beanstalk::_error()
 	 * @var array
 	 */
-	protected $_errors = array();
+	protected $_errors = [];
 
 	/**
 	 * Constructor.
@@ -69,13 +69,13 @@ class Socket_Beanstalk {
 	 *                          connection, defaults to `1`.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
-		$defaults = array(
+	public function __construct(array $config = []) {
+		$defaults = [
 			'persistent' => true,
 			'host' => '127.0.0.1',
 			'port' => 11300,
 			'timeout' => 1
-		);
+		];
 		$this->_config = $config + $defaults;
 	}
 
@@ -104,7 +104,7 @@ class Socket_Beanstalk {
 		}
 
 		$function = $this->_config['persistent'] ? 'pfsockopen' : 'fsockopen';
-		$params = array($this->_config['host'], $this->_config['port'], &$errNum, &$errStr);
+		$params = [$this->_config['host'], $this->_config['port'], &$errNum, &$errStr];
 
 		if ($this->_config['timeout']) {
 			$params[] = $this->_config['timeout'];
@@ -297,10 +297,10 @@ class Socket_Beanstalk {
 
 		switch ($status) {
 			case 'RESERVED':
-				return array(
+				return [
 					'id' => (integer) strtok(' '),
 					'body' => $this->_read((integer) strtok(' '))
-				);
+				];
 			case 'DEADLINE_SOON':
 			case 'TIMED_OUT':
 			default:
@@ -487,10 +487,10 @@ class Socket_Beanstalk {
 
 		switch ($status) {
 			case 'FOUND':
-				return array(
+				return [
 					'id' => (integer) strtok(' '),
 					'body' => $this->_read((integer) strtok(' '))
-				);
+				];
 			case 'NOT_FOUND':
 			default:
 				$this->_error($status);
@@ -630,7 +630,7 @@ class Socket_Beanstalk {
 	 */
 	protected function _decode($data) {
 		$data = array_slice(explode("\n", $data), 1);
-		$result = array();
+		$result = [];
 
 		foreach ($data as $key => $value) {
 			if ($value[0] === '-') {

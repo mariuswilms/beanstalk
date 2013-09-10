@@ -19,10 +19,10 @@ class ConnectTest extends PHPUnit_Framework_TestCase {
 	public $subject;
 
 	protected function setUp() {
-		$this->subject = new Socket_Beanstalk(array(
+		$this->subject = new Socket_Beanstalk([
 			'host' => TEST_SERVER_HOST,
 			'port' => TEST_SERVER_PORT
-		));
+		]);
 		if (!$this->subject->connect()) {
 			$message = 'Need a running beanstalk server at ' . TEST_SERVER_HOST . ':' . TEST_SERVER_PORT;
 			$this->markTestSkipped($message);

@@ -78,7 +78,7 @@ $beanstalk->watch('flux');
 while (true) {
     $job = $beanstalk->reserve(); // Block until job is available.
     // Now $job is an array which contains its ID and body:
-    // array('id' => 123, 'body' => '/path/to/cat-image.png')
+    // ['id' => 123, 'body' => '/path/to/cat-image.png']
 
     // Processing of the job...
     $result = touch($job['body']);
