@@ -88,7 +88,9 @@ while (true) {
         $beanstalk->bury($job['id']);
     }
 }
-$beanstalk->disconnect();
+// When exiting i.e. on critical error conditions
+// you may also want to disconnect the consumer.
+// $beanstalk->disconnect();
 
 ?>
 
