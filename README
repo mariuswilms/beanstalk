@@ -72,7 +72,7 @@ $beanstalk->disconnect();
 $beanstalk = new Socket_Beanstalk();
 
 $beanstalk->connect();
-$beanstalk->choose('flux');
+$beanstalk->watch('flux');
 
 while (true) {
     $job = $beanstalk->reserve(); // Block until job is available.
