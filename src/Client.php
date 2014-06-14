@@ -12,8 +12,8 @@ namespace beanstalk;
 
 /**
  * An interface to the beanstalk queue service. Implements the beanstalk
- * protocol spec 1.9. Where appropriate the documentation from the protcol has
- * been added to the docblocks in this class.
+ * protocol spec 1.9. Where appropriate the documentation from the protcol
+ * has been added to the docblocks in this class.
  *
  * @link https://github.com/kr/beanstalkd/blob/master/doc/protocol.txt
  */
@@ -81,9 +81,9 @@ class Client {
 
 	/**
 	 * Initiates a socket connection to the beanstalk server. The resulting
-	 * stream will not have any timeout set on it. Which means it can wait an
-	 * unlimited amount of time until a packet becomes available. This is
-	 * required for doing blocking reads.
+	 * stream will not have any timeout set on it. Which means it can wait
+	 * an unlimited amount of time until a packet becomes available. This
+	 * is required for doing blocking reads.
 	 *
 	 * @see \beanstalk\Client::$_connection
 	 * @see \beanstalk\Client::reserve()
@@ -147,8 +147,8 @@ class Client {
 	}
 
 	/**
-	 * Writes a packet to the socket. Prior to writing to the socket will check
-	 * for availability of the connection.
+	 * Writes a packet to the socket. Prior to writing to the socket will
+	 * check for availability of the connection.
 	 *
 	 * @param string $data
 	 * @return integer|boolean number of written bytes or `false` on error.
@@ -163,10 +163,10 @@ class Client {
 	}
 
 	/**
-	 * Reads a packet from the socket. Prior to reading from the socket will
-	 * check for availability of the connection.
+	 * Reads a packet from the socket. Prior to reading from the socket
+	 * will check for availability of the connection.
 	 *
-	 * @param int $length Number of bytes to read.
+	 * @param integer $length Number of bytes to read.
 	 * @return string|boolean Data or `false` on error.
 	 */
 	protected function _read($length = null) {
@@ -224,12 +224,12 @@ class Client {
 	}
 
 	/**
-	 * The `use` command is for producers. Subsequent put commands will put jobs into
-	 * the tube specified by this command. If no use command has been issued, jobs
-	 * will be put into the tube named `default`.
+	 * The `use` command is for producers. Subsequent put commands will put
+	 * jobs into the tube specified by this command. If no use command has
+	 * been issued, jobs will be put into the tube named `default`.
 	 *
 	 * @param string $tube A name at most 200 bytes. It specifies the tube to
-	 *        use.  If the tube does not exist, it will be created.
+	 *        use. If the tube does not exist, it will be created.
 	 * @return string|boolean `false` on error otherwise the name of the tube.
 	 */
 	public function useTube($tube) {
@@ -251,7 +251,7 @@ class Client {
 	 * @param integer $delay Number of seconds to wait before reserving any more
 	 *        jobs from the queue.
 	 * @param string $tube A name at most 200 bytes. It specifies the tube to
-	 *        use.  If the tube does not exist, it will be created.
+	 *        use. If the tube does not exist, it will be created.
 	 * @return boolean `false` on error otherwise `true`.
 	 */
 	public function pauseTube($tube, $delay) {
@@ -270,10 +270,10 @@ class Client {
 	/* Worker Commands */
 
 	/**
-	 * Reserve a job (with a timeout)
+	 * Reserve a job (with a timeout).
 	 *
 	 * @param integer $timeout If given specifies number of seconds to wait for
-	 *        a job. 0 returns immediately.
+	 *        a job. `0` returns immediately.
 	 * @return array|false `false` on error otherwise an array holding job id
 	 *         and body.
 	 */
@@ -365,7 +365,7 @@ class Client {
 	}
 
 	/**
-	 * Allows a worker to request more time to work on a job
+	 * Allows a worker to request more time to work on a job.
 	 *
 	 * @param integer $id The id of the job.
 	 * @return boolean `false` on error, `true` on success.
@@ -385,8 +385,7 @@ class Client {
 	}
 
 	/**
-	 * Adds the named tube to the watch list for the current
-	 * connection.
+	 * Adds the named tube to the watch list for the current connection.
 	 *
 	 * @param string $tube Name of tube to watch.
 	 * @return integer|boolean `false` on error otherwise number of tubes in watch list.
@@ -491,11 +490,11 @@ class Client {
 	/**
 	 * Moves jobs into the ready queue (applies to the current tube).
 	 *
-	 * If there are buried jobs those get kicked only otherwise
-	 * delayed jobs get kicked.
+	 * If there are buried jobs those get kicked only otherwise delayed
+	 * jobs get kicked.
 	 *
 	 * @param integer $bound Upper bound on the number of jobs to kick.
-	 * @return integer|boolean False on error otherwise number of job kicked.
+	 * @return integer|boolean False on error otherwise number of jobs kicked.
 	 */
 	public function kick($bound) {
 		$this->_write(sprintf('kick %d', $bound));
@@ -537,8 +536,8 @@ class Client {
 	/**
 	 * Gives statistical information about the specified job if it exists.
 	 *
-	 * @param integer $id The job id
-	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary
+	 * @param integer $id The job id.
+	 * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
 	 */
 	public function statsJob($id) {
 		$this->_write(sprintf('stats-job %d', $id));
@@ -624,8 +623,8 @@ class Client {
 	}
 
 	/**
-	 * Decodes YAML data. This is a super naive decoder which just works on a
-	 * subset of YAML which is commonly returned by beanstalk.
+	 * Decodes YAML data. This is a super naive decoder which just works on
+	 * a subset of YAML which is commonly returned by beanstalk.
 	 *
 	 * @param string $data The data in YAML format, can be either a list or a dictionary.
 	 * @return array An (associative) array of the converted data.
