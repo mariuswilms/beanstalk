@@ -13,6 +13,9 @@
     "require": {
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "phpunit": ">=4.0.0"
+    },
     "autoload": {
         "psr-4": { "beanstalk": "src/" }
     }
