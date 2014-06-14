@@ -252,10 +252,9 @@ class Client {
 	/**
 	 * Pause a tube delaying any new job in it being reserved for a given time.
 	 *
+	 * @param string $tube The name of the tube to pause.
 	 * @param integer $delay Number of seconds to wait before reserving any more
 	 *        jobs from the queue.
-	 * @param string $tube A name at most 200 bytes. It specifies the tube to
-	 *        use. If the tube does not exist, it will be created.
 	 * @return boolean `false` on error otherwise `true`.
 	 */
 	public function pauseTube($tube, $delay) {
