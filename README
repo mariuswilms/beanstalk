@@ -25,7 +25,7 @@ Versions & Requirements
 -----------------------
 1.0.0, PHP >=5.2.1
 1.1.0, PHP >=5.2.1
-1.2.0, PHP >=5.4.0 (in progress)
+2.0.0, PHP >=5.4.0
 
 Note: In PHP Versions 5.3.9 and 5.3.10 the `stream_get_line()`
       function exhibits buggy behavior (PHP bug #60817), thus
