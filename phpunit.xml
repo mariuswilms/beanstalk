@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ beanstalk: A minimalistic PHP beanstalk client
 
+ Copyright (c) 2009-2013 David Persson
+
+ Distributed under the terms of the MIT License.
+ Redistributions of files must retain the above copyright notice.
+-->
 <phpunit backupGlobals="false"
 		 backupStaticAttributes="false"
 		 syntaxCheck="false"
