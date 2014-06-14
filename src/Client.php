@@ -264,6 +264,7 @@ class Client {
 		switch ($status) {
 			case 'PAUSED':
 				return true;
+			case 'NOT_FOUND':
 			default:
 				$this->_error($status);
 				return false;
@@ -528,6 +529,7 @@ class Client {
 		switch ($status) {
 			case 'KICKED':
 				return true;
+			case 'NOT_FOUND':
 			default:
 				$this->_error($status);
 				return false;
