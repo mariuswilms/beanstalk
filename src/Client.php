@@ -244,14 +244,11 @@ class Client {
 	 * the tube specified by this command. If no use command has been issued, jobs
 	 * will be put into the tube named `default`.
 	 *
-	 * Please note that while obviously this method should better be named
-	 * `use` it is not. This is because `use` is a reserved keyword in PHP.
-	 *
 	 * @param string $tube A name at most 200 bytes. It specifies the tube to
 	 *        use.  If the tube does not exist, it will be created.
 	 * @return string|boolean `false` on error otherwise the name of the tube.
 	 */
-	public function choose($tube) {
+	public function useTube($tube) {
 		$this->_write(sprintf('use %s', $tube));
 		$status = strtok($this->_read(), ' ');
 
@@ -262,17 +259,6 @@ class Client {
 				$this->_error($status);
 				return false;
 		}
-	}
-
-	/**
-	 * Alias for choose.
-	 *
-	 * @see \beanstalk\Client::choose()
-	 * @param string $tube
-	 * @return string|boolean
-	 */
-	public function useTube($tube) {
-		return $this->choose($tube);
 	}
 
 	/* Worker Commands */
@@ -581,16 +567,6 @@ class Client {
 	}
 
 	/**
-	 * Alias for listTubeUsed.
-	 *
-	 * @see \beanstalk\Client::listTubeUsed()
-	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
-	 */
-	public function listTubeChosen() {
-		return $this->listTubeUsed();
-	}
-
-	/**
 	 * Returns a list of tubes currently being watched by the worker.
 	 *
 	 * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
@@ -643,6 +619,39 @@ class Client {
 			$result[$key] = $value;
 		}
 		return $result;
+	}
+
+	/* Deprecated */
+
+	/**
+	 * Alias for useTube.
+	 *
+	 * @deprecated
+	 * @see \beanstalk\Client::useTube()
+	 * @param string $tube
+	 * @return string|boolean
+	 */
+	public function choose($tube) {
+		$message  = 'Client::choose() is deprecated in favor of Client::useTube(). ';
+		$message .= 'Please update your code accordingly.';
+		trigger_error($message, E_USER_DEPRECATED);
+
+		return $this->useTube($tube);
+	}
+
+	/**
+	 * Alias for listTubeUsed.
+	 *
+	 * @deprecated
+	 * @see \beanstalk\Client::listTubeUsed()
+	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
+	 */
+	public function listTubeChosen() {
+		$message  = 'Client::listTubeChosen() is deprecated in favor of Client::listTubeUsed(). ';
+		$message .= 'Please update your code accordingly.';
+		trigger_error($message, E_USER_DEPRECATED);
+
+		return $this->listTubeUsed();
 	}
 }
 

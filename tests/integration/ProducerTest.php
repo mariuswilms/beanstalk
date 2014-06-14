@@ -26,7 +26,7 @@ class ProducerTest extends \PHPUnit_Framework_TestCase {
 			$this->markTestSkipped($message);
 		}
 		foreach ($this->subject->listTubes() as $tube) {
-			$this->subject->choose($tube);
+			$this->subject->useTube($tube);
 
 			while ($job = $this->subject->peekReady()) {
 				$this->subject->delete($job['id']);
@@ -35,11 +35,11 @@ class ProducerTest extends \PHPUnit_Framework_TestCase {
 				$this->subject->delete($job['id']);
 			}
 		}
-		$this->subject->choose('default');
+		$this->subject->useTube('default');
 	}
 
 	public function testPut() {
-		$this->subject->choose('test');
+		$this->subject->useTube('test');
 
 		$this->subject->put(0, 0, 100, 'test');
 		$this->subject->put(0, 0, 100, 'test');
@@ -48,11 +48,11 @@ class ProducerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(2, $result['current-jobs-urgent']);
 	}
 
-	public function testChoose() {
-		$result = $this->subject->choose('test0');
+	public function testUseTube() {
+		$result = $this->subject->useTube('test0');
 		$this->assertEquals('test0', $result);
 
-		$result = $this->subject->choose('test1');
+		$result = $this->subject->useTube('test1');
 		$this->assertEquals('test1', $result);
 	}
 
@@ -100,7 +100,7 @@ class ProducerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testHighFrequencyPut() {
-		$this->subject->choose('test');
+		$this->subject->useTube('test');
 
 		for ($i = 0; $i < 10000; $i++) {
 			$this->subject->put(0, 0, 100, 'test' . $i);
