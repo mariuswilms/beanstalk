@@ -185,8 +185,8 @@ class Client {
 			$meta = stream_get_meta_data($this->_connection);
 
 			if ($meta['timed_out']) {
-				$this->_error('Connection timed out.');
-				return false;
+				$message = 'Connection timed out while reading data from socket.';
+				throw new RuntimeException($message);
 			}
 			$packet = rtrim($data, "\r\n");
 		} else {
