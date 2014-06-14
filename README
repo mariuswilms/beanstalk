@@ -50,7 +50,7 @@ use beanstalk\Client;
 $beanstalk = new Client(); // For connection options see the class documentation.
 
 $beanstalk->connect();
-$beanstalk->choose('flux'); // Begin to use tube `'flux'`.
+$beanstalk->useTube('flux'); // Begin to use tube `'flux'`.
 $beanstalk->put(
     23, // Give the job a priority of 23.
     0,  // Do not wait to put job into the ready queue.
