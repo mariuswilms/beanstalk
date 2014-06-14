@@ -10,6 +10,8 @@
 
 namespace beanstalk;
 
+use RuntimeException;
+
 /**
  * An interface to the beanstalk queue service. Implements the beanstalk
  * protocol spec 1.9. Where appropriate the documentation from the protcol
@@ -155,7 +157,8 @@ class Client {
 	 */
 	protected function _write($data) {
 		if (!$this->connected && !$this->connect()) {
-			return false;
+			$message = 'Failed to autoconnect while writing data to socket.';
+			throw new RuntimeException($message);
 		}
 
 		$data .= "\r\n";
@@ -171,7 +174,8 @@ class Client {
 	 */
 	protected function _read($length = null) {
 		if (!$this->connected && !$this->connect()) {
-			return false;
+			$message = 'Failed to autoconnect while reading data from socket.';
+			throw new RuntimeException($message);
 		}
 		if ($length) {
 			if (feof($this->_connection)) {
