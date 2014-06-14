@@ -488,6 +488,28 @@ class Client {
 		}
 	}
 
+	/**
+	 * This is a variant of the kick command that operates with a single
+	 * job identified by its job id. If the given job id exists and is in a
+	 * buried or delayed state, it will be moved to the ready queue of the
+	 * the same tube where it currently belongs.
+	 *
+	 * @param integer $id The job id.
+	 * @return boolean `false` on error `true` otherwise.
+	 */
+	public function kickJob($id) {
+		$this->_write(sprintf('kick-job %d', $id));
+		$status = strtok($this->_read(), ' ');
+
+		switch ($status) {
+			case 'KICKED':
+				return true;
+			default:
+				$this->_error($status);
+				return false;
+		}
+	}
+
 	/* Stats Commands */
 
 	/**
