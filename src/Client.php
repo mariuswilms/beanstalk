@@ -245,6 +245,28 @@ class Client {
 		}
 	}
 
+	/**
+	 * Pause a tube delaying any new job in it being reserved for a given time.
+	 *
+	 * @param integer $delay Number of seconds to wait before reserving any more
+	 *        jobs from the queue.
+	 * @param string $tube A name at most 200 bytes. It specifies the tube to
+	 *        use.  If the tube does not exist, it will be created.
+	 * @return boolean `false` on error otherwise `true`.
+	 */
+	public function pauseTube($tube, $delay) {
+		$this->_write(sprintf('pause-tube %s %d', $tube, $delay));
+		$status = strtok($this->_read(), ' ');
+
+		switch ($status) {
+			case 'PAUSED':
+				return true;
+			default:
+				$this->_error($status);
+				return false;
+		}
+	}
+
 	/* Worker Commands */
 
 	/**
