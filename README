@@ -47,7 +47,8 @@ use beanstalk\Client;
 //
 // A sample producer.
 //
-$beanstalk = new Client(); // For connection options see the class documentation.
+$beanstalk = new Client(); // For connection options see the
+                           // class documentation.
 
 $beanstalk->connect();
 $beanstalk->useTube('flux'); // Begin to use tube `'flux'`.
