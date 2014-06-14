@@ -42,17 +42,6 @@ class Client {
 	protected $_connection;
 
 	/**
-	 * Generated errors. Will hold a maximum of 200 error messages at any time
-	 * to prevent pilling up messages and using more and more memory. This is
-	 * especially important if this class is used in long-running workers.
-	 *
-	 * @see \beanstalk\Client::errors()
-	 * @see \beanstalk\Client::_error()
-	 * @var array
-	 */
-	protected $_errors = [];
-
-	/**
 	 * Constructor.
 	 *
 	 * @param array $config An array of configuration values:
@@ -65,6 +54,9 @@ class Client {
 	 *                          to `11300`.
 	 *        - `'timeout'`     Timeout in seconds when establishing the
 	 *                          connection, defaults to `1`.
+	 *        - `'logger'`      An instance of a PSR-3 compatible logger.
+	 *
+	 * @link https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
 	 * @return void
 	 */
 	public function __construct(array $config = []) {
@@ -72,7 +64,8 @@ class Client {
 			'persistent' => true,
 			'host' => '127.0.0.1',
 			'port' => 11300,
-			'timeout' => 1
+			'timeout' => 1,
+			'logger' => null
 		];
 		$this->_config = $config + $defaults;
 	}
@@ -140,26 +133,15 @@ class Client {
 	}
 
 	/**
-	 * Returns collected error messages.
-	 *
-	 * @return array An array of error messages.
-	 */
-	public function errors() {
-		return $this->_errors;
-	}
-
-	/**
-	 * Pushes an error message to `Beanstalk::$_errors`. Ensures
-	 * that at any point there are not more than 200 messages.
+	 * Pushes an error message to the logger, when one is configured.
 	 *
 	 * @param string $message The error message.
 	 * @return void
 	 */
 	protected function _error($message) {
-		if (count($this->_errors) >= 200) {
-			array_shift($this->_errors);
+		if ($this->_config['logger']) {
+			$this->_config['logger']->error($message);
 		}
-		array_push($this->_errors, $message);
 	}
 
 	/**
@@ -622,6 +604,20 @@ class Client {
 	}
 
 	/* Deprecated */
+
+	/**
+	 * Returns collected error messages.
+	 *
+	 * @deprecated
+	 * @return array An array of error messages.
+	 */
+	public function errors() {
+		$message  = 'Client::errors() is deprecated in favor of passing a PSR-3 ';
+		$message .= 'compatible logger instance to the constructor.';
+		trigger_error($message, E_USER_DEPRECATED);
+
+		return [];
+	}
 
 	/**
 	 * Alias for useTube.
