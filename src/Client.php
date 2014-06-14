@@ -156,8 +156,8 @@ class Client {
 	 * @return integer|boolean number of written bytes or `false` on error.
 	 */
 	protected function _write($data) {
-		if (!$this->connected && !$this->connect()) {
-			$message = 'Failed to autoconnect while writing data to socket.';
+		if (!$this->connected) {
+			$message = 'No connecting found while writing data to socket.';
 			throw new RuntimeException($message);
 		}
 
@@ -173,8 +173,8 @@ class Client {
 	 * @return string|boolean Data or `false` on error.
 	 */
 	protected function _read($length = null) {
-		if (!$this->connected && !$this->connect()) {
-			$message = 'Failed to autoconnect while reading data from socket.';
+		if (!$this->connected) {
+			$message = 'No connection found while reading data from socket.';
 			throw new RuntimeException($message);
 		}
 		if ($length) {
