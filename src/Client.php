@@ -115,7 +115,8 @@ class Client {
 	}
 
 	/**
-	 * Closes the connection to the beanstalk server.
+	 * Closes the connection to the beanstalk server by first signaling
+	 * that we want to quit then actually closing the socket connection.
 	 *
 	 * @return boolean `true` if diconnecting was successful.
 	 */
@@ -123,6 +124,7 @@ class Client {
 		if (!is_resource($this->_connection)) {
 			$this->connected = false;
 		} else {
+			$this->_write('quit');
 			$this->connected = !fclose($this->_connection);
 
 			if (!$this->connected) {
