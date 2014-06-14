@@ -12,7 +12,7 @@ namespace beanstalk;
 
 /**
  * An interface to the beanstalk queue service. Implements the beanstalk
- * protocol spec 1.2. Where appropriate the documentation from the protcol has
+ * protocol spec 1.9. Where appropriate the documentation from the protcol has
  * been added to the docblocks in this class.
  *
  * @link https://github.com/kr/beanstalkd/blob/master/doc/protocol.txt
