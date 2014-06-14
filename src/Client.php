@@ -8,6 +8,8 @@
  * Redistributions of files must retain the above copyright notice.
  */
 
+namespace beanstalk;
+
 /**
  * An interface to the beanstalk queue service. Implements the beanstalk
  * protocol spec 1.2. Where appropriate the documentation from the protcol has
@@ -15,7 +17,7 @@
  *
  * @link https://github.com/kr/beanstalkd/blob/master/doc/protocol.txt
  */
-class Socket_Beanstalk {
+class Client {
 
 	/**
 	 * Holds a boolean indicating whether a connection to the server is
@@ -44,8 +46,8 @@ class Socket_Beanstalk {
 	 * to prevent pilling up messages and using more and more memory. This is
 	 * especially important if this class is used in long-running workers.
 	 *
-	 * @see Socket_Beanstalk::errors()
-	 * @see Socket_Beanstalk::_error()
+	 * @see \beanstalk\Client::errors()
+	 * @see \beanstalk\Client::_error()
 	 * @var array
 	 */
 	protected $_errors = [];
@@ -90,8 +92,8 @@ class Socket_Beanstalk {
 	 * unlimited amount of time until a packet becomes available. This is
 	 * required for doing blocking reads.
 	 *
-	 * @see Socket_Beanstalk::$_connection
-	 * @see Socket_Beanstalk::reserve()
+	 * @see \beanstalk\Client::$_connection
+	 * @see \beanstalk\Client::reserve()
 	 * @return boolean `true` if the connection was established, `false` otherwise.
 	 */
 	public function connect() {
@@ -265,7 +267,7 @@ class Socket_Beanstalk {
 	/**
 	 * Alias for choose.
 	 *
-	 * @see Socket_Beanstalk::choose()
+	 * @see \beanstalk\Client::choose()
 	 * @param string $tube
 	 * @return string|boolean
 	 */
@@ -581,7 +583,7 @@ class Socket_Beanstalk {
 	/**
 	 * Alias for listTubeUsed.
 	 *
-	 * @see Socket_Beanstalk::listTubeUsed()
+	 * @see \beanstalk\Client::listTubeUsed()
 	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
 	 */
 	public function listTubeChosen() {

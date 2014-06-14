@@ -14,6 +14,6 @@
         "php": ">=5.4.0"
     },
     "autoload": {
-        "psr-0": { "Socket_Beanstalk": "src/" }
+        "psr-4": { "beanstalk": "src/" }
     }
 }

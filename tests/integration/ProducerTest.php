@@ -8,14 +8,16 @@
  * Redistributions of files must retain the above copyright notice.
  */
 
-require_once 'Socket/Beanstalk.php';
+namespace beanstalk\tests\integration;
 
-class ProducerTest extends PHPUnit_Framework_TestCase {
+use beanstalk\Client;
+
+class ProducerTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 
 	protected function setUp() {
-		$this->subject = new Socket_Beanstalk([
+		$this->subject = new Client([
 			'host' => TEST_SERVER_HOST,
 			'port' => TEST_SERVER_PORT
 		]);
