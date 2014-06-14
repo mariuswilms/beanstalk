@@ -97,7 +97,7 @@ $ beanstalkd -VV -l 127.0.0.1 -p 11301
 Tests for this library are PHPUnit based. To run the tests you'll need
 to have PHPUnit installed[1]. Following commands will run all the tests.
 
-$ cd /path/to/beanstalk/src
-$ phpunit -c ../phpunit.xml
+$ cd /path/to/beanstalk
+$ phpunit
 
 [1] http://www.phpunit.de/manual/current/en/installation.html
