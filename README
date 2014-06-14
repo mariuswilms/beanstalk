@@ -17,7 +17,7 @@ extracted for higher reusability in other places and frameworks.
 Copyright & License
 -------------------
 Beanstalk, a beanstalk PHP client library for the beanstalk work queue is
-Copyright (c) 2009-2013 David Persson if not otherwise stated. The code
+Copyright (c) 2009-2014 David Persson if not otherwise stated. The code
 is distributed under the terms of the MIT License. For the full license
 text see the LICENSE file.
 
