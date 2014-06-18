@@ -87,8 +87,8 @@ class Client {
 	 * an unlimited amount of time until a packet becomes available. This
 	 * is required for doing blocking reads.
 	 *
-	 * @see \beanstalk\Client::$_connection
-	 * @see \beanstalk\Client::reserve()
+	 * @see \Beanstalk\Client::$_connection
+	 * @see \Beanstalk\Client::reserve()
 	 * @return boolean `true` if the connection was established, `false` otherwise.
 	 */
 	public function connect() {
@@ -673,7 +673,7 @@ class Client {
 	 * Alias for useTube.
 	 *
 	 * @deprecated
-	 * @see \beanstalk\Client::useTube()
+	 * @see \Beanstalk\Client::useTube()
 	 * @param string $tube
 	 * @return string|boolean
 	 */
@@ -689,7 +689,7 @@ class Client {
 	 * Alias for listTubeUsed.
 	 *
 	 * @deprecated
-	 * @see \beanstalk\Client::listTubeUsed()
+	 * @see \Beanstalk\Client::listTubeUsed()
 	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
 	 */
 	public function listTubeChosen() {

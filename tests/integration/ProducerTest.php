@@ -8,9 +8,9 @@
  * Redistributions of files must retain the above copyright notice.
  */
 
-namespace beanstalk\tests\integration;
+namespace Beanstalk;
 
-use beanstalk\Client;
+use Beanstalk\Client;
 
 class ProducerTest extends \PHPUnit_Framework_TestCase {
 

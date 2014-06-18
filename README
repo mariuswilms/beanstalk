@@ -42,7 +42,7 @@ Usage
 -----
 <?php
 
-use beanstalk\Client;
+use Beanstalk\Client;
 
 //
 // A sample producer.
