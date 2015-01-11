@@ -22,6 +22,22 @@ use RuntimeException;
 class Client {
 
 	/**
+	 * Minimum priority value which can be assigned to a job. The minimum
+	 * priority value is also the _highest priority_ a job can have.
+	 *
+	 * @var integer
+	 */
+	const MIN_PRIORITY = 0;
+
+	/**
+	 * Maximum priority value which can be assigned to a job. The maximum
+	 * priority value is also the _lowest priority_ a job can have.
+	 *
+	 * @var integer
+	 */
+	const MAX_PRIORITY = 4294967295;
+
+	/**
 	 * Holds a boolean indicating whether a connection to the server is
 	 * currently established or not.
 	 *
