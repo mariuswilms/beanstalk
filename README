@@ -11,8 +11,12 @@ main (and currently only) class can be found at `src/Client.php`.
 The class was formerly part of the queue plugin for CakePHP[2]. It has been
 extracted for higher reusability in other places and frameworks.
 
+Cute[3] is such a project. It uses this library to provide convenient
+access and tooling around the work queue for PHP.
+
 [1] http://kr.github.com/beanstalkd
 [2] https://github.com/davidpersson/queue
+[3] https://github.com/atelierdisko/cute_php
 
 Copyright & License
 -------------------
