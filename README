@@ -1,10 +1,10 @@
 
 BEANSTALK
----- Minimalistic PHP client for beanstalk.
+---- Minimalistic PHP client for beanstalkd.
 
 Synopsis
 --------
-This library allows you to interface with the beanstalk[1] work queue and is
+This library allows you to interface with the beanstalkd[1] work queue and is
 built with a minimal featureset still supporting the complete protocol. The
 main (and currently only) class can be found at `src/Client.php`.
 
@@ -16,7 +16,7 @@ extracted for higher reusability in other places and frameworks.
 
 Copyright & License
 -------------------
-Beanstalk, a beanstalk PHP client library for the beanstalk work queue is
+Beanstalk, a beanstalk PHP client library for the beanstalkd work queue is
 Copyright (c) 2009-2014 David Persson if not otherwise stated. The code
 is distributed under the terms of the MIT License. For the full license
 text see the LICENSE file.
