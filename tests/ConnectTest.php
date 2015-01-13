@@ -17,12 +17,17 @@ class ConnectTest extends \PHPUnit_Framework_TestCase {
 	public $subject;
 
 	protected function setUp() {
-		$this->subject = new Client([
-			'host' => TEST_SERVER_HOST,
-			'port' => TEST_SERVER_PORT
-		]);
+		$host = getenv('TEST_BEANSTALKD_HOST');
+		$port = getenv('TEST_BEANSTALKD_PORT');
+
+		if (!$host || !$port) {
+			$message = 'TEST_BEANSTALKD_HOST and/or TEST_BEANSTALKD_PORT env variables not defined.';
+			$this->markTestSkipped($message);
+		}
+		$this->subject = new Client(compact('host', 'port'));
+
 		if (!$this->subject->connect()) {
-			$message = 'Need a running beanstalk server at ' . TEST_SERVER_HOST . ':' . TEST_SERVER_PORT;
+			$message  = "Need a running beanstalkd server at {$host}:{$port}.";
 			$this->markTestSkipped($message);
 		}
 	}
