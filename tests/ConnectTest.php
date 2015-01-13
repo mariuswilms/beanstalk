@@ -2,7 +2,7 @@
 /**
  * beanstalk: A minimalistic PHP beanstalk client.
  *
- * Copyright (c) 2009-2014 David Persson
+ * Copyright (c) 2009-2015 David Persson
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
