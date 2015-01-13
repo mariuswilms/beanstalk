@@ -1,0 +1,25 @@
+#
+# beanstalk: A minimalistic PHP beanstalk client.
+#
+# Copyright (c) 2009-2014 David Persson
+#
+# Distributed under the terms of the MIT License.
+# Redistributions of files must retain the above copyright notice.
+#
+
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+
+before_install:
+  - sudo apt-get install -qq beanstalkd
+  - sudo beanstalkd -d -l 127.0.0.1 -p 11301
+
+before_script:
+  - composer install --no-interaction
+
+script:
+  - TEST_BEANSTALKD_HOST=127.0.0.1 TEST_BEANSTALKD_PORT=11301 vendor/bin/phpunit tests
