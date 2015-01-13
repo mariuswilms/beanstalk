@@ -16,6 +16,9 @@
     "require-dev": {
         "phpunit/phpunit": ">=4.0.0"
     },
+    "suggests": {
+      "monolog/monolog": "This or any other PSR-3 logger can be used to enable logging."
+    },
     "autoload": {
         "psr-4": { "Beanstalk\\": "src/" }
     }
