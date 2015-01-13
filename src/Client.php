@@ -668,53 +668,6 @@ class Client {
 		}
 		return $result;
 	}
-
-	/* Deprecated */
-
-	/**
-	 * Returns collected error messages.
-	 *
-	 * @deprecated
-	 * @return array An array of error messages.
-	 */
-	public function errors() {
-		$message  = 'Client::errors() is deprecated in favor of passing a PSR-3 ';
-		$message .= 'compatible logger instance to the constructor.';
-		trigger_error($message, E_USER_DEPRECATED);
-
-		return [];
-	}
-
-	/**
-	 * Alias for useTube.
-	 *
-	 * @deprecated
-	 * @see \Beanstalk\Client::useTube()
-	 * @param string $tube
-	 * @return string|boolean
-	 */
-	public function choose($tube) {
-		$message  = 'Client::choose() is deprecated in favor of Client::useTube(). ';
-		$message .= 'Please update your code accordingly.';
-		trigger_error($message, E_USER_DEPRECATED);
-
-		return $this->useTube($tube);
-	}
-
-	/**
-	 * Alias for listTubeUsed.
-	 *
-	 * @deprecated
-	 * @see \Beanstalk\Client::listTubeUsed()
-	 * @return string|boolean `false` on error otherwise a string with the name of the tube.
-	 */
-	public function listTubeChosen() {
-		$message  = 'Client::listTubeChosen() is deprecated in favor of Client::listTubeUsed(). ';
-		$message .= 'Please update your code accordingly.';
-		trigger_error($message, E_USER_DEPRECATED);
-
-		return $this->listTubeUsed();
-	}
 }
 
 ?>
