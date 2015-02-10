@@ -136,20 +136,23 @@ class Client {
 	 * Closes the connection to the beanstalk server by first signaling
 	 * that we want to quit then actually closing the socket connection.
 	 *
+	 * Will throw an exception if closing the connection fails, to allow
+	 * handling the then undefined state. However we don't check if sending
+	 * `quit` to the server succeeds as it is historically not required for
+	 * a successful client-side disconnect.
+	 *
+	 * @link http://pubs.opengroup.org/onlinepubs/009695399/functions/close.html
 	 * @return boolean `true` if diconnecting was successful.
 	 */
 	public function disconnect() {
-		if (!is_resource($this->_connection)) {
-			$this->connected = false;
-		} else {
+		if (is_resource($this->_connection)) {
 			$this->_write('quit');
-			$this->connected = !fclose($this->_connection);
 
-			if (!$this->connected) {
-				$this->_connection = null;
+			if (!fclose($this->_connection)) {
+				throw new RuntimeException('Failed to close connection.');
 			}
 		}
-		return !$this->connected;
+		return !($this->connected = false);
 	}
 
 	/**
