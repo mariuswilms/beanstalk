@@ -85,7 +85,7 @@ class Client {
 			'timeout' => 1,
 			'logger' => null
 		];
-		$this->_config = $config + $defaults;
+		$this->_config = $defaults + $config;
 	}
 
 	/**
