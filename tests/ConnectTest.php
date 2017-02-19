@@ -12,11 +12,19 @@ namespace Beanstalk;
 
 use Beanstalk\Client;
 
+/**
+ * Class ConnectTest
+ * @package Beanstalk
+ */
 class ConnectTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 
-	protected function setUp() {
+    /**
+     * Define environments,
+     * and setup Client object
+     */
+    protected function setUp() {
 		$host = getenv('TEST_BEANSTALKD_HOST');
 		$port = getenv('TEST_BEANSTALKD_PORT');
 
@@ -32,7 +40,11 @@ class ConnectTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	public function testConnection() {
+    /**
+     * Run tests against methods and variables
+     * from the Client object
+     */
+    public function testConnection() {
 		$this->subject->disconnect();
 
 		$result = $this->subject->connect();
