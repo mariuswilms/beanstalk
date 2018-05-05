@@ -174,7 +174,7 @@ class Client {
 	 */
 	protected function _write($data) {
 		if (!$this->connected) {
-			$message = 'No connecting found while writing data to socket.';
+			$message = 'No connection found while trying to write.';
 			throw new RuntimeException($message);
 		}
 
@@ -191,7 +191,7 @@ class Client {
 	 */
 	protected function _read($length = null) {
 		if (!$this->connected) {
-			$message = 'No connection found while reading data from socket.';
+			$message = 'No connection found while trying to read.';
 			throw new RuntimeException($message);
 		}
 		if ($length) {
@@ -202,7 +202,7 @@ class Client {
 			$meta = stream_get_meta_data($this->_connection);
 
 			if ($meta['timed_out']) {
-				$message = 'Connection timed out while reading data from socket.';
+				$message = 'Connection timed out while reading.';
 				throw new RuntimeException($message);
 			}
 			$packet = rtrim($data, "\r\n");
