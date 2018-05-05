@@ -123,13 +123,11 @@ class Client {
 		if (!empty($errNum) || !empty($errStr)) {
 			$this->_error("{$errNum}: {$errStr}");
 		}
-
-		$this->connected = is_resource($this->_connection);
-
-		if ($this->connected) {
-			stream_set_timeout($this->_connection, -1);
+		if (!is_resource($this->_connection)) {
+			return false;
 		}
-		return $this->connected;
+		stream_set_timeout($this->_connection, -1);
+		return $this->connected = true;
 	}
 
 	/**
